@@ -1,8 +1,20 @@
 .section-card {
+  position: relative;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   padding: 22px;
+  overflow: hidden;
+}
+
+.section-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-border) 50%, transparent);
 }
 
 .section-card + .section-card {
@@ -16,9 +28,19 @@
 }
 
 .section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--accent);
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-border), transparent);
 }
