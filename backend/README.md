@@ -1,6 +1,6 @@
-# Threspert — Backend (Hermes agent)
+# Threspert — Backend
 
-Express API that powers Threspert. It talks to a model on **OpenRouter** (the "Hermes" copywriting agent — currently the free `google/gemma-4-31b-it:free` model, with automatic fallback to other free models) to turn a short description into multiple ready-to-post hook-driven thread variations.
+Express API that powers Threspert. It talks to a model on **OpenRouter** (currently the free `google/gemma-4-31b-it:free` model, with automatic fallback to other free models) to turn a short description into multiple ready-to-post hook-driven thread variations.
 
 ## Setup
 
@@ -72,7 +72,7 @@ backend/
     config/       # env loading
     controllers/   # request handlers
     routes/        # API route definitions
-    services/      # Hermes (OpenRouter) generation logic
+    services/      # Threspert (OpenRouter) generation logic
     middlewares/    # error handling
     models/        # reserved for future DB-backed history
     repositories/   # reserved for future DB-backed history

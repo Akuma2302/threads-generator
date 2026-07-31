@@ -31,5 +31,5 @@ app.use(notFound);
 app.use(errorHandler);
 
 app.listen(env.port, () => {
-  console.log(`Threspert backend (Hermes agent) listening on port ${env.port}`);
+  console.log(`Threspert backend listening on port ${env.port}`);
 });

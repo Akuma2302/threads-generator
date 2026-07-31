@@ -1,4 +1,4 @@
-const { generateThreadContent } = require('../services/hermesService');
+const { generateThreadContent } = require('../services/threspertService');
 const { validateGenerateRequest } = require('../validators/threadsValidator');
 
 // POST /api/threads/generate

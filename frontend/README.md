@@ -1,6 +1,6 @@
 # Threspert — Frontend
 
-React + Vite frontend for Threspert. Matches the flow: **Mode Penulisan → Post Details (topic, platform, language, length, counts, hook types, product link) → Generated Posts**, powered by the Hermes AI agent on the backend.
+React + Vite frontend for Threspert. Matches the flow: **Mode Penulisan → Post Details (topic, platform, language, length, counts, hook types, product link) → Generated Posts**, powered by the Threspert AI agent on the backend.
 
 ## Setup
 

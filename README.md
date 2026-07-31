@@ -1,6 +1,6 @@
 # Threspert
 
-A tool for content creators, affiliates, and small businesses to turn a short product/topic description into multiple ready-to-post, hook-driven **Threads** (or X/Instagram/TikTok caption) post variations — written by an AI copywriting agent called **Hermes**, backed by a free model on OpenRouter (with automatic fallback to other free models if one's provider hiccups).
+A tool for content creators, affiliates, and small businesses to turn a short product/topic description into multiple ready-to-post, hook-driven **Threads** (or X/Instagram/TikTok caption) post variations — written by Threspert's AI copywriting agent, backed by a free model on OpenRouter (with automatic fallback to other free models if one's provider hiccups).
 
 ## How it works
 

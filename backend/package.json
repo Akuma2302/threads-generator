@@ -1,7 +1,7 @@
 {
   "name": "threads-generator-backend",
   "version": "1.0.0",
-  "description": "Backend API for the Threads Content Generator (Hermes AI agent)",
+  "description": "Backend API for Threspert (AI post generation agent)",
   "main": "src/server.js",
   "type": "commonjs",
   "scripts": {
