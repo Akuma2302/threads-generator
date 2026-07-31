@@ -4,8 +4,18 @@ const VALID_THREAD_COUNTS = [1, 2, 3, 4, 5, 6];
 
 function validateGenerateRequest(body) {
   const errors = [];
-  const { mode, postAbout, platform, captionLanguage, length, postCount, threadPerPost, hookTypes, productLink } =
-    body;
+  const {
+    mode,
+    postAbout,
+    platform,
+    captionLanguage,
+    length,
+    audience,
+    postCount,
+    threadPerPost,
+    hookTypes,
+    productLink,
+  } = body;
 
   if (!mode || !VALID_MODES.includes(mode)) {
     errors.push(`mode must be one of: ${VALID_MODES.join(', ')}`);
@@ -18,6 +28,7 @@ function validateGenerateRequest(body) {
   if (!platform) errors.push('platform is required');
   if (!captionLanguage) errors.push('captionLanguage is required');
   if (!length) errors.push('length is required');
+  if (!audience) errors.push('audience is required');
 
   if (!postCount || !VALID_POST_COUNTS.includes(Number(postCount))) {
     errors.push(`postCount must be one of: ${VALID_POST_COUNTS.join(', ')}`);

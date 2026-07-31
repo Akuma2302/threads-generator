@@ -11,6 +11,7 @@ const initialForm = {
   platform: 'Threads',
   captionLanguage: 'Bahasa Melayu',
   length: 'Panjang',
+  audience: 'General / Semua 🌍',
   postCount: 1,
   threadPerPost: 5,
   hookTypes: ['bold_statement'],

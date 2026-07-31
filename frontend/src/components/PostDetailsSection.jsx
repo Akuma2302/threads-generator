@@ -3,7 +3,7 @@ import { Field, Select } from './FormControls';
 import CountPills from './CountPills';
 import HookTypePills from './HookTypePills';
 import GenerateButton from './GenerateButton';
-import { PLATFORMS, CAPTION_LANGUAGES, LENGTHS, THREAD_COUNT_OPTIONS } from '../utils/constants';
+import { PLATFORMS, CAPTION_LANGUAGES, LENGTHS, TARGET_AUDIENCES, THREAD_COUNT_OPTIONS } from '../utils/constants';
 import { useApp } from '../context/AppContext';
 import './SectionCard.css';
 import './PostDetailsSection.css';
@@ -36,9 +36,18 @@ export default function PostDetailsSection({ onGenerate, loading, error }) {
           </Field>
         </div>
 
-        <Field label="Panjang">
-          <Select value={form.length} onChange={(v) => updateForm({ length: v })} options={LENGTHS} />
-        </Field>
+        <div className="field-row">
+          <Field label="Panjang">
+            <Select value={form.length} onChange={(v) => updateForm({ length: v })} options={LENGTHS} />
+          </Field>
+          <Field label="Audience">
+            <Select
+              value={form.audience}
+              onChange={(v) => updateForm({ audience: v })}
+              options={TARGET_AUDIENCES}
+            />
+          </Field>
+        </div>
 
         <Field label="Berapa Thread Satu Post">
           <CountPills

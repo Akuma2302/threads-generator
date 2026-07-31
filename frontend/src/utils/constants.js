@@ -30,6 +30,24 @@ export const CAPTION_LANGUAGES = [
 
 export const LENGTHS = ['Pendek', 'Sederhana', 'Panjang'];
 
+export const TARGET_AUDIENCES = [
+  'Girls 👧',
+  'Guys 👦',
+  'Working Professionals 💼',
+  'Students 🎓',
+  'Parents 👨‍👩‍👧',
+  'Entrepreneurs 🚀',
+  'Housewives 🏠',
+  'Teenagers 🧑',
+  'Fitness Enthusiasts 💪',
+  'Foodies 🍜',
+  'Travelers 🧳',
+  'Gamers 🎮',
+  'Beauty & Skincare Lovers 💄',
+  'Muslimah 🧕',
+  'General / Semua 🌍',
+];
+
 export const THREAD_COUNT_OPTIONS = [1, 2, 3, 4, 5, 6];
 
 export const HOOK_TYPES = [

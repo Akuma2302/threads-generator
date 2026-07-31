@@ -38,6 +38,7 @@ function buildThreadPrompt(input) {
     platform,
     captionLanguage,
     length,
+    audience,
     postCount,
     threadPerPost,
     hookTypes,
@@ -61,6 +62,7 @@ POST DETAILS
 - Platform: ${platform}
 - Caption language: ${captionLanguage}
 - Length: ${length}
+- Target audience: ${audience} — tailor tone, references, and word choice to genuinely resonate with this group.
 ${productLink ? `- Product link (weave in naturally near the end if this is a sales post, never in the hook): ${productLink}` : ''}
 
 HOOK TYPES TO BLEND (choose one primary style per variation from this set, blending naturally — do not label it clumsily in the text itself)
