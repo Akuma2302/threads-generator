@@ -9,7 +9,7 @@ module.exports = {
   // on OpenRouter are prone to transient provider-side outages, so having a
   // few backups means one flaky provider doesn't take the whole app down.
   openrouterFallbackModels: (process.env.OPENROUTER_FALLBACK_MODELS ||
-    'meta-llama/llama-3.3-70b-instruct:free,z-ai/glm-4.5-air:free,nvidia/nemotron-3-super-120b-a12b:free'
+    'nvidia/nemotron-3-super-120b-a12b:free,openai/gpt-oss-20b:free,qwen/qwen3-coder:free,openrouter/free'
   )
     .split(',')
     .map((m) => m.trim())

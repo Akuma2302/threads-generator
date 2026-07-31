@@ -34,6 +34,13 @@ async function generateThreadContent(input) {
   const { system, user } = buildThreadPrompt(input);
   const userContent = user;
 
+  // Scale the output budget to how much content was actually requested —
+  // a fixed low limit was causing truncated/invalid JSON on larger batches
+  // (e.g. 5 posts x 5 parts), while a fixed high limit wastes tokens on
+  // small requests.
+  const totalParts = Number(input.postCount || 1) * Number(input.threadPerPost || 1);
+  const maxTokens = Math.min(8000, Math.max(1500, totalParts * 180));
+
   const modelsToTry = [openrouterModel, ...openrouterFallbackModels];
   const attemptErrors = [];
 
@@ -50,7 +57,7 @@ async function generateThreadContent(input) {
             { role: 'user', content: userContent },
           ],
           temperature: 0.9,
-          max_tokens: 2000,
+          max_tokens: maxTokens,
         },
         {
           headers: {
