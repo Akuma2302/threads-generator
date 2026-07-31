@@ -1,6 +1,6 @@
 # Threads Generator
 
-A tool for content creators, affiliates, and small businesses to turn a messy product link or a raw brain-dump into ready-to-post **Threads** content — written by an AI copywriting agent called **Hermes** (Claude).
+A tool for content creators, affiliates, and small businesses to turn a messy product link or a raw brain-dump into ready-to-post **Threads** content — written by an AI copywriting agent called **Hermes**, backed by a free model (`openai/gpt-oss-120b:free`) on OpenRouter. Swap in any other OpenRouter model — including the real Nous Research Hermes 4 — by changing one env var.
 
 ## How it works
 
@@ -24,7 +24,7 @@ See `backend/README.md` and `frontend/README.md` for setup and deployment instru
 # Terminal 1
 cd backend
 npm install
-cp .env.example .env   # add your ANTHROPIC_API_KEY
+cp .env.example .env   # add your OPENROUTER_API_KEY (free at openrouter.ai/keys)
 npm run dev
 
 # Terminal 2

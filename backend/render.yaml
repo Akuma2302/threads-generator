@@ -6,10 +6,14 @@ services:
     buildCommand: npm install
     startCommand: npm start
     envVars:
-      - key: ANTHROPIC_API_KEY
+      - key: OPENROUTER_API_KEY
         sync: false
-      - key: CLAUDE_MODEL
-        value: claude-sonnet-4-5-20250929
+      - key: OPENROUTER_MODEL
+        value: openai/gpt-oss-120b:free
+      - key: OPENROUTER_SITE_URL
+        sync: false
+      - key: OPENROUTER_APP_NAME
+        value: Threads Generator
       - key: CLIENT_ORIGIN
         sync: false
       - key: RATE_LIMIT_MAX

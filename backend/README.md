@@ -1,15 +1,28 @@
 # Threads Generator — Backend (Hermes agent)
 
-Express API that powers the Threads Generator. It talks to Claude (the "Hermes" copywriting agent) to turn raw notes, affiliate links, or event/business info into ready-to-post Threads content.
+Express API that powers the Threads Generator. It talks to a model on **OpenRouter** (the "Hermes" copywriting agent — currently the free `openai/gpt-oss-120b:free` model) to turn raw notes, affiliate links, or event/business info into ready-to-post Threads content.
 
 ## Setup
 
 ```bash
 cd backend
 npm install
-cp .env.example .env   # then fill in ANTHROPIC_API_KEY
+cp .env.example .env   # then fill in OPENROUTER_API_KEY
 npm run dev
 ```
+
+Get a free `OPENROUTER_API_KEY` at [openrouter.ai/keys](https://openrouter.ai/keys) — no credit card needed for the free-tier model.
+
+### Swapping models
+
+Change `OPENROUTER_MODEL` in `.env` to point at any model OpenRouter serves — no code changes needed:
+
+- `openai/gpt-oss-120b:free` — default, $0
+- `google/gemma-4-31b-it:free` — also free
+- `nousresearch/hermes-4-70b` — the real Hermes 4 model, paid but cheap (~$0.13/M input tokens)
+- `nousresearch/hermes-4-405b` — larger Hermes 4, higher quality, paid
+
+Note: most free-tier models don't accept image input, so uploaded posters are only used for their filename as text context. Paid vision-capable models (including OpenAI's own vision models) will use the actual image if you set `enableVisionInput: true` in the request.
 
 Server runs on `http://localhost:5000` by default.
 
@@ -59,7 +72,7 @@ Response:
 
 ## Deploying to Render
 
-This repo includes a `render.yaml`. Push `backend/` to a Git repo, create a new Render Web Service from it, and set the `ANTHROPIC_API_KEY` and `CLIENT_ORIGIN` (your Netlify URL) environment variables in the Render dashboard.
+This repo includes a `render.yaml`. Push `backend/` to a Git repo, create a new Render Web Service from it, and set the `OPENROUTER_API_KEY` and `CLIENT_ORIGIN` (your Netlify URL) environment variables in the Render dashboard.
 
 ## Folder structure
 
