@@ -3,13 +3,13 @@ import { Field, Select } from './FormControls';
 import CountPills from './CountPills';
 import HookTypePills from './HookTypePills';
 import GenerateButton from './GenerateButton';
-import { PLATFORMS, CAPTION_LANGUAGES, LENGTHS, COUNT_OPTIONS } from '../utils/constants';
+import { PLATFORMS, CAPTION_LANGUAGES, LENGTHS, THREAD_COUNT_OPTIONS } from '../utils/constants';
 import { useApp } from '../context/AppContext';
 import './SectionCard.css';
 import './PostDetailsSection.css';
 
 export default function PostDetailsSection({ onGenerate, loading, error }) {
-  const { form, updateForm, toggleHookType } = useApp();
+  const { form, updateForm, selectHookType } = useApp();
 
   return (
     <section className="section-card">
@@ -40,13 +40,9 @@ export default function PostDetailsSection({ onGenerate, loading, error }) {
           <Select value={form.length} onChange={(v) => updateForm({ length: v })} options={LENGTHS} />
         </Field>
 
-        <Field label="Berapa Post?">
-          <CountPills options={COUNT_OPTIONS} value={form.postCount} onChange={(v) => updateForm({ postCount: v })} />
-        </Field>
-
         <Field label="Berapa Thread Satu Post">
           <CountPills
-            options={COUNT_OPTIONS}
+            options={THREAD_COUNT_OPTIONS}
             value={form.threadPerPost}
             onChange={(v) => updateForm({ threadPerPost: v })}
           />
@@ -54,8 +50,8 @@ export default function PostDetailsSection({ onGenerate, loading, error }) {
         </Field>
 
         <Field label="Jenis Hook">
-          <HookTypePills value={form.hookTypes} onToggle={toggleHookType} />
-          <p className="field-hint">Pilih satu atau lebih — AI akan blend secara natural.</p>
+          <HookTypePills selected={form.hookTypes[0]} onSelect={selectHookType} />
+          <p className="field-hint">Pilih satu jenis hook untuk post ini.</p>
         </Field>
 
         <Field label="Link Produk (Pilihan)">

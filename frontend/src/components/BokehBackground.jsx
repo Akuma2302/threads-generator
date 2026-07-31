@@ -21,10 +21,10 @@ export default function BokehBackground() {
     let bokehs = [];
 
     const BOKEH_COLORS = [
-      'rgba(60, 130, 255, 1)',
-      'rgba(90, 160, 255, 1)',
-      'rgba(40, 100, 220, 1)',
-      'rgba(120, 180, 255, 1)',
+      'rgba(35, 70, 140, 1)',
+      'rgba(45, 85, 160, 1)',
+      'rgba(28, 60, 120, 1)',
+      'rgba(55, 95, 165, 1)',
     ];
 
     function resize() {
@@ -60,7 +60,7 @@ export default function BokehBackground() {
         y: rand(0, height),
         r: rand(18, 70),
         color: BOKEH_COLORS[Math.floor(rand(0, BOKEH_COLORS.length))],
-        alpha: rand(0.08, 0.28),
+        alpha: rand(0.05, 0.16),
         driftX: rand(-0.06, 0.06),
         driftY: rand(-0.12, -0.02),
         pulseSpeed: rand(0.2, 0.6),
@@ -77,9 +77,9 @@ export default function BokehBackground() {
         height * 0.55,
         Math.max(width, height) * 0.75
       );
-      grad.addColorStop(0, '#0f2a5c');
-      grad.addColorStop(0.55, '#081a3d');
-      grad.addColorStop(1, '#020510');
+      grad.addColorStop(0, '#0e1830');
+      grad.addColorStop(0.55, '#0a1224');
+      grad.addColorStop(1, '#05070f');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
     }

@@ -1,5 +1,6 @@
 const VALID_MODES = ['post_biasa', 'post_jualan', 'post_engagement'];
-const VALID_COUNTS = [1, 3, 5, 10];
+const VALID_POST_COUNTS = [1];
+const VALID_THREAD_COUNTS = [1, 2, 3, 4, 5, 6];
 
 function validateGenerateRequest(body) {
   const errors = [];
@@ -18,16 +19,16 @@ function validateGenerateRequest(body) {
   if (!captionLanguage) errors.push('captionLanguage is required');
   if (!length) errors.push('length is required');
 
-  if (!postCount || !VALID_COUNTS.includes(Number(postCount))) {
-    errors.push(`postCount must be one of: ${VALID_COUNTS.join(', ')}`);
+  if (!postCount || !VALID_POST_COUNTS.includes(Number(postCount))) {
+    errors.push(`postCount must be one of: ${VALID_POST_COUNTS.join(', ')}`);
   }
 
-  if (!threadPerPost || !VALID_COUNTS.includes(Number(threadPerPost))) {
-    errors.push(`threadPerPost must be one of: ${VALID_COUNTS.join(', ')}`);
+  if (!threadPerPost || !VALID_THREAD_COUNTS.includes(Number(threadPerPost))) {
+    errors.push(`threadPerPost must be one of: ${VALID_THREAD_COUNTS.join(', ')}`);
   }
 
-  if (!Array.isArray(hookTypes) || hookTypes.length === 0) {
-    errors.push('hookTypes must have at least one selected hook type');
+  if (!Array.isArray(hookTypes) || hookTypes.length !== 1) {
+    errors.push('hookTypes must contain exactly one selected hook type');
   }
 
   if (productLink) {
@@ -42,4 +43,4 @@ function validateGenerateRequest(body) {
   return errors;
 }
 
-module.exports = { validateGenerateRequest, VALID_MODES, VALID_COUNTS };
+module.exports = { validateGenerateRequest, VALID_MODES, VALID_POST_COUNTS, VALID_THREAD_COUNTS };

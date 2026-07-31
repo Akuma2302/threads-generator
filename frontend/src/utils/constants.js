@@ -30,7 +30,7 @@ export const CAPTION_LANGUAGES = [
 
 export const LENGTHS = ['Pendek', 'Sederhana', 'Panjang'];
 
-export const COUNT_OPTIONS = [1, 3, 5, 10];
+export const THREAD_COUNT_OPTIONS = [1, 2, 3, 4, 5, 6];
 
 export const HOOK_TYPES = [
   { value: 'storytelling', label: 'Storytelling' },

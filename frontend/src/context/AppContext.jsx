@@ -11,9 +11,9 @@ const initialForm = {
   platform: 'Threads',
   captionLanguage: 'Bahasa Melayu',
   length: 'Panjang',
-  postCount: 5,
+  postCount: 1,
   threadPerPost: 5,
-  hookTypes: ['curiosity', 'bold_statement', 'negative_reverse', 'controversy_spike'],
+  hookTypes: ['bold_statement'],
   productLink: '',
 };
 
@@ -39,12 +39,8 @@ export function AppProvider({ children }) {
     setForm((prev) => ({ ...prev, ...patch }));
   }, []);
 
-  const toggleHookType = useCallback((value) => {
-    setForm((prev) => {
-      const has = prev.hookTypes.includes(value);
-      const hookTypes = has ? prev.hookTypes.filter((v) => v !== value) : [...prev.hookTypes, value];
-      return { ...prev, hookTypes };
-    });
+  const selectHookType = useCallback((value) => {
+    setForm((prev) => ({ ...prev, hookTypes: [value] }));
   }, []);
 
   const pushHistory = useCallback((entry) => {
@@ -62,7 +58,7 @@ export function AppProvider({ children }) {
     form,
     setForm,
     updateForm,
-    toggleHookType,
+    selectHookType,
     result,
     setResult,
     history,

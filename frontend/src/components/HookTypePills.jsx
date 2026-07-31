@@ -2,18 +2,19 @@ import React from 'react';
 import { HOOK_TYPES } from '../utils/constants';
 import './HookTypePills.css';
 
-export default function HookTypePills({ value, onToggle }) {
+export default function HookTypePills({ selected, onSelect }) {
   return (
-    <div className="hook-pills">
+    <div className="hook-pills" role="radiogroup">
       {HOOK_TYPES.map((hook) => {
-        const active = value.includes(hook.value);
+        const active = selected === hook.value;
         return (
           <button
             key={hook.value}
             type="button"
+            role="radio"
+            aria-checked={active}
             className={`hook-pill ${active ? 'hook-pill--active' : ''}`}
-            onClick={() => onToggle(hook.value)}
-            aria-pressed={active}
+            onClick={() => onSelect(hook.value)}
           >
             {active && <span className="hook-pill__check">✓</span>}
             {hook.label}
