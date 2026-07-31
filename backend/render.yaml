@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: threads-generator-backend
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: CLAUDE_MODEL
+        value: claude-sonnet-4-5-20250929
+      - key: CLIENT_ORIGIN
+        sync: false
+      - key: RATE_LIMIT_MAX
+        value: 30
+      - key: RATE_LIMIT_WINDOW_MS
+        value: 900000

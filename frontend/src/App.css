@@ -1,0 +1,13 @@
+.app__generate-row {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.app__error {
+  color: var(--danger);
+  font-size: 13px;
+  text-align: center;
+  margin: 0;
+}

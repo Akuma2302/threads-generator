@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Surfaces */
+  --bg-app: #0a0e1a;
+  --bg-card: #12172a;
+  --bg-card-raised: #171d34;
+  --bg-input: #0d1226;
+  --border-subtle: #232c47;
+  --border-strong: #323d5e;
+
+  /* Text */
+  --text-primary: #eef0f8;
+  --text-secondary: #9aa3c0;
+  --text-muted: #626c8c;
+
+  /* Brand accent */
+  --accent: #9061f9;
+  --accent-bright: #b18bff;
+  --accent-soft: rgba(144, 97, 249, 0.14);
+  --accent-border: rgba(144, 97, 249, 0.55);
+
+  /* Feedback */
+  --success: #34d399;
+  --danger: #f87171;
+
+  --font-display: 'Manrope', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at 20% -10%, #1c1440 0%, var(--bg-app) 45%) fixed;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  color: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--accent-bright);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 2px;
+}
+
+a {
+  color: var(--accent-bright);
+}
