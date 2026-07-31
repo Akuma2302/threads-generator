@@ -1,5 +1,11 @@
 const axios = require('axios');
-const { openrouterApiKey, openrouterModel, openrouterSiteUrl, openrouterAppName } = require('../config/env');
+const {
+  openrouterApiKey,
+  openrouterModel,
+  openrouterFallbackModels,
+  openrouterSiteUrl,
+  openrouterAppName,
+} = require('../config/env');
 const { buildThreadPrompt } = require('../utils/promptBuilder');
 
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
@@ -40,63 +46,67 @@ async function generateThreadContent(input) {
     });
   }
 
-  let response;
-  try {
-    response = await axios.post(
-      OPENROUTER_URL,
-      {
-        model: openrouterModel,
-        messages: [
-          { role: 'system', content: system },
-          { role: 'user', content: userContent },
-        ],
-        temperature: 0.9,
-        max_tokens: 2000,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${openrouterApiKey}`,
-          'Content-Type': 'application/json',
-          // OpenRouter uses these to attribute traffic / unlock some free-tier rate limits.
-          'HTTP-Referer': openrouterSiteUrl,
-          'X-Title': openrouterAppName,
+  const modelsToTry = [openrouterModel, ...openrouterFallbackModels];
+  const attemptErrors = [];
+
+  for (let i = 0; i < modelsToTry.length; i++) {
+    const model = modelsToTry[i];
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      const response = await axios.post(
+        OPENROUTER_URL,
+        {
+          model,
+          messages: [
+            { role: 'system', content: system },
+            { role: 'user', content: userContent },
+          ],
+          temperature: 0.9,
+          max_tokens: 2000,
         },
-        timeout: 30000,
+        {
+          headers: {
+            Authorization: `Bearer ${openrouterApiKey}`,
+            'Content-Type': 'application/json',
+            // OpenRouter uses these to attribute traffic / unlock some free-tier rate limits.
+            'HTTP-Referer': openrouterSiteUrl,
+            'X-Title': openrouterAppName,
+          },
+          timeout: 30000,
+        }
+      );
+
+      const raw = stripCodeFences(response.data?.choices?.[0]?.message?.content || '{}');
+      const parsed = JSON.parse(raw);
+
+      if (!Array.isArray(parsed.posts) || parsed.posts.length === 0) {
+        throw new Error('Model returned no posts');
       }
-    );
-  } catch (err) {
-    const status = err.response?.status || 502;
-    const providerMessage = err.response?.data?.error?.message;
-    const error = new Error(
-      providerMessage
-        ? `Hermes (OpenRouter) error: ${providerMessage}`
-        : 'Could not reach the Hermes model provider. Please try again.'
-    );
-    error.status = status === 401 ? 500 : status;
-    throw error;
+
+      if (i > 0) {
+        console.warn(`[hermes] Primary model failed, succeeded on fallback: ${model}`);
+      }
+
+      return {
+        posts: parsed.posts,
+        suggestedFirstComment: parsed.suggestedFirstComment || '',
+      };
+    } catch (err) {
+      const providerMessage = err.response?.data?.error?.message || err.message;
+      console.error(`[hermes] Model "${model}" failed: ${providerMessage}`);
+      attemptErrors.push(`${model}: ${providerMessage}`);
+      // Try the next model in the list.
+    }
   }
 
-  const raw = stripCodeFences(response.data?.choices?.[0]?.message?.content || '{}');
-
-  let parsed;
-  try {
-    parsed = JSON.parse(raw);
-  } catch {
-    const error = new Error('Hermes returned a response that could not be parsed. Please try again.');
-    error.status = 502;
-    throw error;
-  }
-
-  if (!Array.isArray(parsed.posts) || parsed.posts.length === 0) {
-    const error = new Error('Hermes did not return any thread posts. Please try again.');
-    error.status = 502;
-    throw error;
-  }
-
-  return {
-    posts: parsed.posts,
-    suggestedFirstComment: parsed.suggestedFirstComment || '',
-  };
+  // Every model in the list failed.
+  const error = new Error(
+    `Hermes couldn't generate a thread right now — every configured model failed (${attemptErrors.join(
+      '; '
+    )}). Please try again shortly.`
+  );
+  error.status = 502;
+  throw error;
 }
 
 module.exports = { generateThreadContent };
