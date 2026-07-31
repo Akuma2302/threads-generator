@@ -15,7 +15,7 @@ module.exports = {
     .map((m) => m.trim())
     .filter(Boolean),
   openrouterSiteUrl: process.env.OPENROUTER_SITE_URL || 'http://localhost:5173',
-  openrouterAppName: process.env.OPENROUTER_APP_NAME || 'Threads Generator',
+  openrouterAppName: process.env.OPENROUTER_APP_NAME || 'Threspert',
   clientOrigin: process.env.CLIENT_ORIGIN
     ? process.env.CLIENT_ORIGIN.split(',').map((s) => s.trim())
     : '*',

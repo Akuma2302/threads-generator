@@ -11,10 +11,10 @@ export default function GenerateButton({ onClick, loading, disabled }) {
     >
       {loading ? (
         <>
-          <span className="generate-btn__spinner" /> Generating…
+          <span className="generate-btn__spinner" /> Menjana…
         </>
       ) : (
-        <>🧵 Generate Threads Content</>
+        <>🪄 Generate post · FREE (Lifetime)</>
       )}
     </button>
   );

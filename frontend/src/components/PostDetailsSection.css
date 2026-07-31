@@ -1,0 +1,6 @@
+.post-details__error {
+  color: var(--danger);
+  font-size: 13px;
+  text-align: center;
+  margin: 0;
+}

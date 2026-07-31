@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import NumberedSection from './NumberedSection';
+import { hookLabel } from '../utils/constants';
+import './SectionCard.css';
 import './OutputSection.css';
 
 function CopyButton({ text }) {
@@ -16,9 +17,51 @@ function CopyButton({ text }) {
   };
 
   return (
-    <button type="button" className="copy-btn" onClick={handleCopy}>
-      {copied ? '✓ Copied' : '📋 Copy'}
+    <button type="button" className="salin-btn" onClick={handleCopy}>
+      <span className="salin-btn__icon">{copied ? '✓' : '⧉'}</span>
+      {copied ? 'Disalin' : 'Salin'}
     </button>
+  );
+}
+
+function VariationCard({ variation, index, total }) {
+  return (
+    <section className="section-card variation-card">
+      <div className="section-card__body">
+        <div className="variation-card__header">
+          <span className="hook-type-tag">{hookLabel(variation.hookType).toUpperCase()}</span>
+          {total > 1 && (
+            <span className="variation-card__count">
+              Post {index + 1} / {total}
+            </span>
+          )}
+        </div>
+
+        <div className="output-block">
+          <div className="output-block__header">
+            <span className="output-block__label">
+              Hook <span className="output-block__hint" title="Baris pertama yang menentukan sama ada orang stop scroll.">ⓘ</span>
+            </span>
+            <CopyButton text={variation.hook} />
+          </div>
+          <p className="output-block__text">{variation.hook}</p>
+        </div>
+
+        <span className="output-block__label output-block__label--section">Full Post ({variation.parts.length})</span>
+
+        {variation.parts.map((part, i) => (
+          <div className="output-block" key={i}>
+            <div className="output-block__header">
+              <span className="output-block__index">
+                {i + 1} / {variation.parts.length}
+              </span>
+              <CopyButton text={part} />
+            </div>
+            <p className="output-block__text">{part}</p>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -26,50 +69,20 @@ export default function OutputSection({ result, isGenerating }) {
   if (!result && !isGenerating) return null;
 
   return (
-    <NumberedSection number={3} title="Generated Thread">
+    <div className="output-section">
       {isGenerating && (
-        <div className="output-section__loading">
-          <span className="generate-btn__spinner-standalone" />
-          Hermes is writing your thread…
-        </div>
-      )}
-
-      {!isGenerating && result && (
-        <>
-          <div className="output-section__posts">
-            {result.posts.map((post, i) => (
-              <div key={i} className="thread-post">
-                <div className="thread-post__header">
-                  <span className="thread-post__index">Post {i + 1}</span>
-                  <CopyButton text={post} />
-                </div>
-                <p className="thread-post__text">{post}</p>
-              </div>
-            ))}
+        <section className="section-card">
+          <div className="output-section__loading">
+            <span className="output-section__spinner" />
+            Threspert sedang menulis post anda…
           </div>
-
-          {result.suggestedFirstComment && (
-            <div className="thread-post thread-post--comment">
-              <div className="thread-post__header">
-                <span className="thread-post__index">💬 Suggested first comment</span>
-                <CopyButton text={result.suggestedFirstComment} />
-              </div>
-              <p className="thread-post__text">{result.suggestedFirstComment}</p>
-            </div>
-          )}
-
-          <button
-            type="button"
-            className="copy-all-btn"
-            onClick={() => {
-              const all = result.posts.map((p, i) => `Post ${i + 1}:\n${p}`).join('\n\n');
-              navigator.clipboard.writeText(all).catch(() => {});
-            }}
-          >
-            📋 Copy entire thread
-          </button>
-        </>
+        </section>
       )}
-    </NumberedSection>
+
+      {!isGenerating &&
+        result?.variations?.map((variation, i) => (
+          <VariationCard key={i} variation={variation} index={i} total={result.variations.length} />
+        ))}
+    </div>
   );
 }

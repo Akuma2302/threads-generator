@@ -32,19 +32,7 @@ function stripCodeFences(text) {
  */
 async function generateThreadContent(input) {
   const { system, user } = buildThreadPrompt(input);
-
-  const userContent = [{ type: 'text', text: user }];
-
-  // Only attach the image if the selected model supports vision input.
-  // Most free-tier text models (like gpt-oss-120b) do NOT accept images —
-  // if one was uploaded, its filename/context is still captured in the
-  // prompt text (see promptBuilder), just not the pixels themselves.
-  if (input.imageBase64 && input.imageMediaType && input.enableVisionInput) {
-    userContent.push({
-      type: 'image_url',
-      image_url: { url: `data:${input.imageMediaType};base64,${input.imageBase64}` },
-    });
-  }
+  const userContent = user;
 
   const modelsToTry = [openrouterModel, ...openrouterFallbackModels];
   const attemptErrors = [];
@@ -79,18 +67,25 @@ async function generateThreadContent(input) {
       const raw = stripCodeFences(response.data?.choices?.[0]?.message?.content || '{}');
       const parsed = JSON.parse(raw);
 
-      if (!Array.isArray(parsed.posts) || parsed.posts.length === 0) {
-        throw new Error('Model returned no posts');
+      if (!Array.isArray(parsed.variations) || parsed.variations.length === 0) {
+        throw new Error('Model returned no variations');
+      }
+
+      const variations = parsed.variations.map((v) => ({
+        hookType: v.hookType || '',
+        hook: v.hook || (Array.isArray(v.parts) ? v.parts[0] : ''),
+        parts: Array.isArray(v.parts) ? v.parts : [],
+      }));
+
+      if (variations.some((v) => v.parts.length === 0)) {
+        throw new Error('A variation was returned with no parts');
       }
 
       if (i > 0) {
         console.warn(`[hermes] Primary model failed, succeeded on fallback: ${model}`);
       }
 
-      return {
-        posts: parsed.posts,
-        suggestedFirstComment: parsed.suggestedFirstComment || '',
-      };
+      return { variations };
     } catch (err) {
       const providerMessage = err.response?.data?.error?.message || err.message;
       console.error(`[hermes] Model "${model}" failed: ${providerMessage}`);

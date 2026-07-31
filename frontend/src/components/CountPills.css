@@ -1,0 +1,28 @@
+.count-pills {
+  display: flex;
+  gap: 8px;
+}
+
+.count-pill {
+  min-width: 48px;
+  padding: 9px 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card-raised);
+  color: var(--text-secondary);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.count-pill:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.count-pill--active {
+  background: var(--brand-gradient);
+  border-color: transparent;
+  color: #fff;
+}

@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background: linear-gradient(135deg, var(--accent) 0%, #6d3ff0 100%);
+  background: var(--brand-gradient);
   color: #fff;
   border: none;
   border-radius: var(--radius-md);
@@ -13,7 +13,7 @@
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 8px 24px -8px rgba(144, 97, 249, 0.6);
+  box-shadow: 0 8px 28px -8px rgba(236, 72, 153, 0.45), 0 8px 28px -10px rgba(45, 212, 191, 0.35);
   transition: transform 0.1s ease, box-shadow 0.15s ease, opacity 0.15s ease;
 }
 

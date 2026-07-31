@@ -14,7 +14,7 @@ app.use(
   })
 );
 
-app.use(express.json({ limit: '12mb' })); // generous limit for base64 poster uploads
+app.use(express.json({ limit: '1mb' }));
 
 const limiter = rateLimit({
   windowMs: env.rateLimit.windowMs,
@@ -31,5 +31,5 @@ app.use(notFound);
 app.use(errorHandler);
 
 app.listen(env.port, () => {
-  console.log(`Threads Generator backend (Hermes agent) listening on port ${env.port}`);
+  console.log(`Threspert backend (Hermes agent) listening on port ${env.port}`);
 });

@@ -15,13 +15,6 @@ async function request(path, options = {}) {
   return body.data;
 }
 
-export function fetchLinkPreview(url) {
-  return request('/threads/fetch-link', {
-    method: 'POST',
-    body: JSON.stringify({ url }),
-  });
-}
-
 export function generateThreadContent(payload) {
   return request('/threads/generate', {
     method: 'POST',

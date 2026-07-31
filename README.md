@@ -1,18 +1,18 @@
-# Threads Generator
+# Threspert
 
-A tool for content creators, affiliates, and small businesses to turn a messy product link or a raw brain-dump into ready-to-post **Threads** content — written by an AI copywriting agent called **Hermes**, backed by a free model (`openai/gpt-oss-120b:free`) on OpenRouter. Swap in any other OpenRouter model — including the real Nous Research Hermes 4 — by changing one env var.
+A tool for content creators, affiliates, and small businesses to turn a short product/topic description into multiple ready-to-post, hook-driven **Threads** (or X/Instagram/TikTok caption) post variations — written by an AI copywriting agent called **Hermes**, backed by a free model on OpenRouter (with automatic fallback to other free models if one's provider hiccups).
 
 ## How it works
 
-1. **Content Source** — choose `Affiliate` (paste a product link, auto-fetch its title/price/description) or `Organic` (pick a sub-type — Service, Event, Personal Life, Volunteer, Business — and dump your raw notes, optionally with a reference link or poster/image upload).
-2. **Strategy & Style** — pick a storytelling angle (Honest Review, Comparison, FOMO/Urgency, etc.), an optional viral formula overlay (POV, Hot Take, PSA...), thread length, audience, and language.
-3. **Generated Thread** — Hermes writes the full multi-post thread, each post copyable individually or all at once, with an optional suggested first comment for the link/CTA.
+1. **Mode Penulisan** — choose Post Biasa (informational, no CTA), Post Jualan (sales-focused), or Post Engagement (question/interaction-focused).
+2. **Post Details** — describe what the post is about, pick platform/caption language/length, how many post variations to generate, how many connected thread parts per post, one or more hook types to blend (Curiosity, Bold Statement, Negative/Reverse, Controversy Spike, etc.), and an optional product link.
+3. **Generated Posts** — each variation shows its blended hook type, a standalone Hook block, and the Full Post thread — every part individually copyable.
 
 ## Project structure
 
 ```
 app/
-  backend/    # Node.js + Express API, calls Claude via @anthropic-ai/sdk
+  backend/    # Node.js + Express API, calls a model via OpenRouter (OpenAI-compatible)
   frontend/   # React + Vite UI
 ```
 

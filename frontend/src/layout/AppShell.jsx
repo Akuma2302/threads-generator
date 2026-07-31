@@ -8,17 +8,16 @@ export default function AppShell({ children, onReset }) {
         <button type="button" className="app-shell__icon-btn" onClick={onReset} aria-label="Reset form">
           ✕
         </button>
-        <div className="app-shell__brand">
-          <span className="app-shell__brand-mark">🧵</span>
-          <div>
-            <h1>Threads Generator</h1>
-            <p>Powered by Hermes AI</p>
-          </div>
-        </div>
         <button type="button" className="app-shell__icon-btn" aria-label="More options">
           ⋯
         </button>
       </header>
+      <div className="app-shell__brand">
+        <h1>
+          Thres<span className="app-shell__brand-highlight">pert</span>
+        </h1>
+        <p>Generate post yang stop scroll dalam saat.</p>
+      </div>
       <main className="app-shell__content">{children}</main>
     </div>
   );

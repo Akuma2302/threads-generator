@@ -1,9 +1,8 @@
 import React from 'react';
 import AppShell from './layout/AppShell';
-import ContentSourceSection from './components/ContentSourceSection';
-import StrategyStyleSection from './components/StrategyStyleSection';
+import WritingModeSection from './components/WritingModeSection';
+import PostDetailsSection from './components/PostDetailsSection';
 import OutputSection from './components/OutputSection';
-import GenerateButton from './components/GenerateButton';
 import HistoryPanel from './components/HistoryPanel';
 import { useApp } from './context/AppContext';
 import { useThreadsApi } from './hooks/useThreadsApi';
@@ -19,7 +18,7 @@ export default function App() {
       setResult(data);
       pushHistory({
         id: Date.now(),
-        label: form.coreContext?.slice(0, 40) || form.affiliateLink || 'Untitled thread',
+        label: form.postAbout?.slice(0, 40) || 'Untitled post',
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         form,
         result: data,
@@ -30,19 +29,14 @@ export default function App() {
   };
 
   const handleReset = () => {
-    setForm((prev) => ({ ...prev, coreContext: '', affiliateLink: '', contextLink: '' }));
+    setForm((prev) => ({ ...prev, postAbout: '', productLink: '' }));
     setResult(null);
   };
 
   return (
     <AppShell onReset={handleReset}>
-      <ContentSourceSection />
-      <StrategyStyleSection />
-
-      <div className="app__generate-row">
-        <GenerateButton onClick={handleGenerate} loading={isGenerating} />
-        {error && <p className="app__error">{error}</p>}
-      </div>
+      <WritingModeSection />
+      <PostDetailsSection onGenerate={handleGenerate} loading={isGenerating} error={error} />
 
       <OutputSection result={result} isGenerating={isGenerating} />
 

@@ -1,65 +1,45 @@
-const VALID_SOURCES = ['affiliate', 'organic'];
-const VALID_SUBTYPES = ['service', 'event', 'personal_life', 'volunteer', 'business'];
+const VALID_MODES = ['post_biasa', 'post_jualan', 'post_engagement'];
+const VALID_COUNTS = [1, 3, 5, 10];
 
 function validateGenerateRequest(body) {
   const errors = [];
-  const {
-    contentSource,
-    subType,
-    coreContext,
-    contextLink,
-    affiliateLink,
-    strategy,
-    threadLength,
-    audience,
-    language,
-  } = body;
+  const { mode, postAbout, platform, captionLanguage, length, postCount, threadPerPost, hookTypes, productLink } =
+    body;
 
-  if (!contentSource || !VALID_SOURCES.includes(contentSource)) {
-    errors.push(`contentSource must be one of: ${VALID_SOURCES.join(', ')}`);
+  if (!mode || !VALID_MODES.includes(mode)) {
+    errors.push(`mode must be one of: ${VALID_MODES.join(', ')}`);
   }
 
-  if (contentSource === 'organic') {
-    if (subType && !VALID_SUBTYPES.includes(subType)) {
-      errors.push(`subType must be one of: ${VALID_SUBTYPES.join(', ')}`);
-    }
-    if (!coreContext || !coreContext.trim()) {
-      errors.push('coreContext (your raw notes) is required for organic content');
-    }
+  if (!postAbout || !postAbout.trim()) {
+    errors.push('postAbout (what the post is about) is required');
   }
 
-  if (contentSource === 'affiliate') {
-    if (!affiliateLink && !coreContext) {
-      errors.push('affiliateLink or coreContext is required for affiliate content');
-    }
+  if (!platform) errors.push('platform is required');
+  if (!captionLanguage) errors.push('captionLanguage is required');
+  if (!length) errors.push('length is required');
+
+  if (!postCount || !VALID_COUNTS.includes(Number(postCount))) {
+    errors.push(`postCount must be one of: ${VALID_COUNTS.join(', ')}`);
   }
 
-  if (!strategy || !strategy.angle) {
-    errors.push('strategy.angle (storytelling angle) is required');
+  if (!threadPerPost || !VALID_COUNTS.includes(Number(threadPerPost))) {
+    errors.push(`threadPerPost must be one of: ${VALID_COUNTS.join(', ')}`);
   }
 
-  if (!threadLength) {
-    errors.push('threadLength is required');
+  if (!Array.isArray(hookTypes) || hookTypes.length === 0) {
+    errors.push('hookTypes must have at least one selected hook type');
   }
 
-  if (!audience) {
-    errors.push('audience is required');
-  }
-
-  if (!language) {
-    errors.push('language is required');
-  }
-
-  if (contextLink) {
+  if (productLink) {
     try {
       // eslint-disable-next-line no-new
-      new URL(contextLink);
+      new URL(productLink);
     } catch {
-      errors.push('contextLink must be a valid URL');
+      errors.push('productLink must be a valid URL');
     }
   }
 
   return errors;
 }
 
-module.exports = { validateGenerateRequest, VALID_SOURCES, VALID_SUBTYPES };
+module.exports = { validateGenerateRequest, VALID_MODES, VALID_COUNTS };

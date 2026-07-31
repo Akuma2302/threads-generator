@@ -1,61 +1,52 @@
-export const CONTENT_SOURCES = [
-  { value: 'affiliate', label: 'Affiliate', icon: '🔗' },
-  { value: 'organic', label: 'Organic', icon: '✨' },
+export const WRITING_MODES = [
+  {
+    value: 'post_biasa',
+    icon: '📝',
+    title: 'Post Biasa',
+    description: 'Sharing & informasi, tiada CTA',
+  },
+  {
+    value: 'post_jualan',
+    icon: '🛒',
+    title: 'Post Jualan',
+    description: 'Fokus convert & jual produk',
+  },
+  {
+    value: 'post_engagement',
+    icon: '💬',
+    title: 'Post Engagement',
+    description: 'Tanya soalan & tingkat interaksi',
+  },
 ];
 
-export const SUB_TYPES = [
-  { value: 'service', label: 'Service', icon: '🛠️' },
-  { value: 'event', label: 'Event', icon: '📅' },
-  { value: 'personal_life', label: 'Personal Life', icon: '📖' },
-  { value: 'volunteer', label: 'Volunteer', icon: '🤝' },
-  { value: 'business', label: 'Business', icon: '🏢' },
-];
+export const PLATFORMS = ['Threads', 'X (Twitter)', 'Instagram Caption', 'TikTok Caption'];
 
-export const STORYTELLING_ANGLES = [
-  { value: 'honest_review', label: 'Honest Review', icon: '💪' },
-  { value: 'comparison', label: 'Comparison', icon: '⚖️' },
-  { value: 'problem_solution', label: 'Problem → Solution', icon: '💡' },
-  { value: 'trend_hop', label: 'Trend Hop', icon: '🕺' },
-  { value: 'value_deal', label: 'Value Deal', icon: '💰' },
-  { value: 'status_flex', label: 'Status Flex', icon: '👑' },
-  { value: 'question_poll', label: 'Question/Poll', icon: '❓' },
-  { value: 'story_time', label: 'Story Time', icon: '💬' },
-  { value: 'hook_shock', label: 'Hook Shock', icon: '⚡' },
-  { value: 'fomo_urgency', label: 'FOMO/Urgency', icon: '🔥' },
-  { value: 'myth_buster', label: 'Myth Buster', icon: '❌' },
-  { value: 'dupe', label: 'Dupe', icon: '🔁' },
-];
-
-export const VIRAL_FORMULAS = [
-  { value: 'dont_gatekeep', label: "Don't Gatekeep", icon: '🚫' },
-  { value: 'pov', label: 'POV', icon: '📺' },
-  { value: 'confession', label: 'Confession', icon: '😳' },
-  { value: 'hot_take', label: 'Hot Take', icon: '🔥' },
-  { value: 'psa', label: 'PSA', icon: '📢' },
-  { value: 'challenge', label: 'Challenge', icon: '🤜' },
-  { value: 'trust_me', label: 'Trust Me', icon: '🤝' },
-];
-
-export const THREAD_LENGTHS = [
-  '2 Posts (Quick)',
-  '4 Posts (Standard)',
-  '6 Posts (Deep Dive)',
-  '8 Posts (Full Story)',
-];
-
-export const AUDIENCES = [
-  'Girls',
-  'Guys',
-  'Working Professionals',
-  'Students',
-  'Parents',
-  'Entrepreneurs',
-  'General / Mixed',
-];
-
-export const LANGUAGES = [
+export const CAPTION_LANGUAGES = [
   'Bahasa Melayu',
   'English',
   'Bahasa Melayu + English (rojak)',
   'Chinese (简体中文)',
 ];
+
+export const LENGTHS = ['Pendek', 'Sederhana', 'Panjang'];
+
+export const COUNT_OPTIONS = [1, 3, 5, 10];
+
+export const HOOK_TYPES = [
+  { value: 'storytelling', label: 'Storytelling' },
+  { value: 'fomo', label: 'FOMO' },
+  { value: 'problem_solution', label: 'Problem-Solution' },
+  { value: 'curiosity', label: 'Curiosity' },
+  { value: 'social_proof', label: 'Social Proof' },
+  { value: 'transformation', label: 'Transformation' },
+  { value: 'vulnerable', label: 'Vulnerable' },
+  { value: 'bold_statement', label: 'Bold Statement' },
+  { value: 'relatable_struggle', label: 'Relatable Struggle' },
+  { value: 'negative_reverse', label: 'Negative / Reverse' },
+  { value: 'result_first', label: 'Result First' },
+  { value: 'controversy_spike', label: 'Controversy Spike' },
+];
+
+export function hookLabel(value) {
+  return HOOK_TYPES.find((h) => h.value === value)?.label || value;
+}

@@ -2,23 +2,19 @@ import React, { createContext, useContext, useState, useCallback, useEffect } fr
 
 const AppContext = createContext(null);
 
-const HISTORY_KEY = 'threads_generator_history';
+const HISTORY_KEY = 'threspert_history';
 const MAX_HISTORY = 20;
 
 const initialForm = {
-  contentSource: 'organic',
-  subType: 'business',
-  coreContext: '',
-  contextLink: '',
-  affiliateLink: '',
-  imageBase64: null,
-  imageMediaType: null,
-  imageName: '',
-  strategy: { angle: 'honest_review', viralFormula: '' },
-  threadLength: '4 Posts (Standard)',
-  audience: 'General / Mixed',
-  audienceDetail: '',
-  language: 'English',
+  mode: 'post_jualan',
+  postAbout: '',
+  platform: 'Threads',
+  captionLanguage: 'Bahasa Melayu',
+  length: 'Panjang',
+  postCount: 5,
+  threadPerPost: 5,
+  hookTypes: ['curiosity', 'bold_statement', 'negative_reverse', 'controversy_spike'],
+  productLink: '',
 };
 
 function loadHistory() {
@@ -43,8 +39,12 @@ export function AppProvider({ children }) {
     setForm((prev) => ({ ...prev, ...patch }));
   }, []);
 
-  const updateStrategy = useCallback((patch) => {
-    setForm((prev) => ({ ...prev, strategy: { ...prev.strategy, ...patch } }));
+  const toggleHookType = useCallback((value) => {
+    setForm((prev) => {
+      const has = prev.hookTypes.includes(value);
+      const hookTypes = has ? prev.hookTypes.filter((v) => v !== value) : [...prev.hookTypes, value];
+      return { ...prev, hookTypes };
+    });
   }, []);
 
   const pushHistory = useCallback((entry) => {
@@ -62,7 +62,7 @@ export function AppProvider({ children }) {
     form,
     setForm,
     updateForm,
-    updateStrategy,
+    toggleHookType,
     result,
     setResult,
     history,

@@ -1,6 +1,6 @@
-# Threads Generator — Frontend
+# Threspert — Frontend
 
-React + Vite frontend for the Threads Content Generator. Matches the 3-step flow: **Content Source → Strategy & Style → Generated Thread**, powered by the Hermes AI agent on the backend.
+React + Vite frontend for Threspert. Matches the flow: **Mode Penulisan → Post Details (topic, platform, language, length, counts, hook types, product link) → Generated Posts**, powered by the Hermes AI agent on the backend.
 
 ## Setup
 
@@ -18,13 +18,12 @@ Runs at `http://localhost:5173`.
 ```
 frontend/
   src/
-    assets/
-    components/    # ContentSourceSection, StrategyStyleSection, OutputSection, pills, etc.
-    layout/        # AppShell (top bar + page frame)
+    components/    # WritingModeSection, PostDetailsSection, OutputSection, CountPills, HookTypePills, etc.
+    layout/        # AppShell (top bar + brand header + page frame)
     context/       # AppContext — global form state + history
     hooks/         # useThreadsApi — API calls with loading/error state
     services/      # api.js — fetch wrapper
-    utils/         # constants.js — pill/dropdown option data
+    utils/         # constants.js — writing modes, hook types, dropdown options
     App.jsx
     main.jsx
     index.css
@@ -40,4 +39,4 @@ frontend/
 ## Notes
 
 - Generation history is stored in the browser's `localStorage` (no backend database yet) so it's per-device.
-- Uploaded posters are sent to the backend as base64 and passed to Claude as an image block so the copy can reference what's on the flyer.
+- "Berapa Post?" generates multiple distinct post variations in one request; "Berapa Thread Satu Post" controls how many connected parts each variation has.
