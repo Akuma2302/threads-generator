@@ -9,12 +9,12 @@ import { useThreadsApi } from './hooks/useThreadsApi';
 import './App.css';
 
 export default function App() {
-  const { form, setForm, result, setResult, pushHistory } = useApp();
+  const { form, setForm, result, setResult, pushHistory, deviceId } = useApp();
   const { generate, isGenerating, error } = useThreadsApi();
 
   const handleGenerate = async () => {
     try {
-      const data = await generate(form);
+      const data = await generate({ ...form, deviceId });
       setResult(data);
       pushHistory({
         id: Date.now(),

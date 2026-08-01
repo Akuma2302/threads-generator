@@ -1,9 +1,8 @@
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
+import { getDeviceId } from '../utils/deviceId';
+import { fetchHistory as apiFetchHistory, deleteHistory as apiDeleteHistory } from '../services/api';
 
 const AppContext = createContext(null);
-
-const HISTORY_KEY = 'threspert_history';
-const MAX_HISTORY = 20;
 
 const initialForm = {
   mode: 'post_jualan',
@@ -18,23 +17,34 @@ const initialForm = {
   productLink: '',
 };
 
-function loadHistory() {
-  try {
-    const raw = localStorage.getItem(HISTORY_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
+function normalizeEntry(row) {
+  return {
+    id: row.id,
+    label: row.form?.postAbout?.slice(0, 40) || 'Untitled post',
+    time: new Date(row.created_at || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    form: row.form,
+    result: row.result,
+  };
 }
 
 export function AppProvider({ children }) {
   const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState(null);
-  const [history, setHistory] = useState(loadHistory);
+  const [history, setHistory] = useState([]);
+  const deviceIdRef = useRef(getDeviceId());
 
+  // Load this device's history from the backend (Supabase) once on mount.
+  // Silently stays empty if Supabase isn't configured or the request fails.
   useEffect(() => {
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
-  }, [history]);
+    apiFetchHistory(deviceIdRef.current)
+      .then((data) => {
+        const rows = data?.history || [];
+        setHistory(rows.map(normalizeEntry));
+      })
+      .catch(() => {
+        // History is a nice-to-have — a failed fetch shouldn't block the app.
+      });
+  }, []);
 
   const updateForm = useCallback((patch) => {
     setForm((prev) => ({ ...prev, ...patch }));
@@ -44,11 +54,17 @@ export function AppProvider({ children }) {
     setForm((prev) => ({ ...prev, hookTypes: [value] }));
   }, []);
 
+  // Optimistically prepend locally right after a successful generate — the
+  // backend already persisted it (fire-and-forget) as part of the generate
+  // call, so there's no need to round-trip a fetch just to show it.
   const pushHistory = useCallback((entry) => {
-    setHistory((prev) => [entry, ...prev].slice(0, MAX_HISTORY));
+    setHistory((prev) => [entry, ...prev]);
   }, []);
 
-  const clearHistory = useCallback(() => setHistory([]), []);
+  const clearHistory = useCallback(() => {
+    setHistory([]);
+    apiDeleteHistory(deviceIdRef.current).catch(() => {});
+  }, []);
 
   const restoreFromHistory = useCallback((entry) => {
     setForm(entry.form);
@@ -66,6 +82,7 @@ export function AppProvider({ children }) {
     pushHistory,
     clearHistory,
     restoreFromHistory,
+    deviceId: deviceIdRef.current,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

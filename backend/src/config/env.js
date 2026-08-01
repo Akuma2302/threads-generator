@@ -16,6 +16,10 @@ module.exports = {
     .filter(Boolean),
   openrouterSiteUrl: process.env.OPENROUTER_SITE_URL || 'http://localhost:5173',
   openrouterAppName: process.env.OPENROUTER_APP_NAME || 'Threspert',
+  // Supabase is optional — if unset, history simply won't be persisted
+  // server-side (the generate endpoint still works fine either way).
+  supabaseUrl: process.env.SUPABASE_URL || '',
+  supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
   clientOrigin: process.env.CLIENT_ORIGIN
     ? process.env.CLIENT_ORIGIN.split(',').map((s) => s.trim())
     : '*',

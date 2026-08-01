@@ -21,3 +21,13 @@ export function generateThreadContent(payload) {
     body: JSON.stringify(payload),
   });
 }
+
+export function fetchHistory(deviceId) {
+  return request(`/threads/history?deviceId=${encodeURIComponent(deviceId)}`);
+}
+
+export function deleteHistory(deviceId) {
+  return request(`/threads/history?deviceId=${encodeURIComponent(deviceId)}`, {
+    method: 'DELETE',
+  });
+}

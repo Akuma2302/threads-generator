@@ -18,6 +18,10 @@ services:
         value: Threads Generator
       - key: CLIENT_ORIGIN
         sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
       - key: RATE_LIMIT_MAX
         value: 30
       - key: RATE_LIMIT_WINDOW_MS
